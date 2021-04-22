@@ -26,7 +26,15 @@ def menu() -> None:
     print('5 - Close Order')
     print('6 - Exit')
 
-    option: int = int(input())
+    while True:
+        try:
+            option = int(input())
+            if type(option) is int:   
+                break
+        except ValueError:
+            print('Invalid Option')
+        sleep(3)
+        menu()
 
     if option ==1:
         item_register()
@@ -62,14 +70,15 @@ def item_register() -> None:
     sleep(3)
     menu()
 
-def item_list() -> None:
-    if len(item) > 0:
+def items_list() -> None:
+    if len(items) > 0:
         print('Items List')
         print('==========')
-        for item in items
-        print(item)
-        print('===============')
-        sleed(1)
+        for item in items:
+            print(item)
+            print('===============')
+        sleep(1)
+        menu()
     else:
         print('No one item are register yet')
         sleep(3)
@@ -91,47 +100,41 @@ def item_purchase() -> None:
         if item:
             if len(basket) > 0:
                 have_in_basket: bool = False
-                for item in basket:
+                for product in basket:
                     amount: int = product.get(items)
                     if amount:
                         product[item] = amount + 1
-                        print)f'The Item {item.name} now have {amount + 1} units in the basket'
+                        print(f'The Item {item.name} now have {amount + 1} units in the basket')
                         have_in_basket = True
-                        sleep(3)
-                        menu()
                 if not have_in_basket:
                     prod = {item: 1}
                     basket.append(prod)
-                    print)f'The Item {item.name} has add in the basket'
-                    sleep(3)
-                    menu()
+                    print(f'The Item {item.name} has add in the basket')
             else:
-                product = {item = 1}
+                product = {item: 1}
                 basket.append(product)
                 print(f'The Item {item.name} has add to the basket')
-                sleep(3)
-                menu()
         else:
             product = {item: 1}
             basket.append(product)
             print(f'No one item with the code: {code} was found')
-            sleep(3)
-            menu()
-    else:
-        print(f'All the items are out of stock')
         sleep(3)
         menu()
+    else:
+        print(f'All the items are out of stock')
+    sleep(3)
+    menu()
 
 def basket_view() -> None:
     if len(basket) > 0:
         print('Items in the basket: ')
 
-        for Item in basket
-            for data in item.items
-            print(data[])
-            print(f'Amount: {data[1]})
-            print('================')
-            sleep(1)
+        for product in basket:
+            for data in product.products():
+                print(data[0])
+                print(f'Amount: {data[1]}')
+                print('================')
+                sleep(1)
 
     else:
         print('Yours basket is empty')
@@ -139,17 +142,17 @@ def basket_view() -> None:
         menu()
 
 def close_order() -> None:
-    if len(items) > 0:
+    if len(basket) > 0:
         total_value: float = 0
 
         print('Items in Basket')
-        for item in basket:
-            for data in item.items()
-            print(data[0])
-            print(f'Amount: {data[1]}')
-            total_value += data[0].price * data[1]
-            print('=====================')
-            sleep(1)
+        for product in basket:
+            for data in product.products():
+                print(data[0])
+                print(f'Amount: {data[1]}')
+                total_value += data[0].price * data[1]
+                print('=====================')
+                sleep(1)
         print(f'Yours total invoice is {format_float_str_currency(total_value)}')
         print('See you soon')
         basket.clear()
@@ -160,13 +163,13 @@ def close_order() -> None:
     menu()
 
 def get_item_from_code(code: int) -> Item:
-    i: item = None
+    i: Item = None
 
     for item in items:
         if item.code == code:
-            p = item
-    return p
+            i = item
+    return i
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     main()  

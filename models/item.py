@@ -3,22 +3,22 @@ from utils.helper import format_float_str_currency
 class Item:
     count: int = 1
 
-    def __init__(self: object, name: str, price: float) -> None:
+    def __init__(self, name: str, price: float) -> None:
         self.__code: int = Item.count
         self.__name: str = name
         self.__price: float = price
         Item.count += 1
 
     @property
-    def code(self: object) -> int:
+    def code(self) -> int:
         return self.__code
 
     @property
-    def name(self: object) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def price(self: object) -> float:
+    def price(self) -> float:
         return self.__price
 
     def __str__(self) -> str:
