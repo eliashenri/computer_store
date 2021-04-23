@@ -5,8 +5,8 @@ from models.item import Item
 from utils.helper import format_float_str_currency
 
 
-items: list[Item] = []
-basket: list[dict[Item, int]] = []
+items: List[Item] = []
+basket: List[Dict[Item, int]] = []
 
 
 def main() -> None:
@@ -36,15 +36,15 @@ def menu() -> None:
         sleep(3)
         menu()
 
-    if option ==1:
+    if option == 1:
         item_register()
     elif option == 2:
         items_list()
     elif option == 3:
         item_purchase()
-    elif option ==4:
+    elif option == 4:
         basket_view()
-    elif option ==5:
+    elif option == 5:
         close_order()
     elif option == 6:
         print('See you soon')
@@ -101,7 +101,7 @@ def item_purchase() -> None:
             if len(basket) > 0:
                 have_in_basket: bool = False
                 for product in basket:
-                    amount: int = product.get(items)
+                    amount = product.get(item)
                     if amount:
                         product[item] = amount + 1
                         print(f'The Item {item.name} now have {amount + 1} units in the basket')
@@ -115,8 +115,6 @@ def item_purchase() -> None:
                 basket.append(product)
                 print(f'The Item {item.name} has add to the basket')
         else:
-            product = {item: 1}
-            basket.append(product)
             print(f'No one item with the code: {code} was found')
         sleep(3)
         menu()
@@ -130,7 +128,7 @@ def basket_view() -> None:
         print('Items in the basket: ')
 
         for product in basket:
-            for data in product.products():
+            for data in product.items():
                 print(data[0])
                 print(f'Amount: {data[1]}')
                 print('================')
@@ -147,7 +145,7 @@ def close_order() -> None:
 
         print('Items in Basket')
         for product in basket:
-            for data in product.products():
+            for data in product.items():
                 print(data[0])
                 print(f'Amount: {data[1]}')
                 total_value += data[0].price * data[1]
